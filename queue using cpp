@@ -1,0 +1,104 @@
+#include <iostream>
+
+using namespace std;
+
+class node
+{
+
+public:
+    int data;
+
+    node *next;
+    node *head = NULL;
+    node *tail = NULL;
+
+    void enque()
+    {
+
+        int n;
+
+        node *tmp = new node;
+
+        cout << "Enter element: ";
+
+        cin >> n;
+
+        tmp->data = n;
+
+        tmp->next = NULL;
+
+        if (head == NULL)
+        { //first node
+
+            head = tmp;
+
+            tail = tmp;
+        }
+
+        else
+        {
+
+            tail->next = tmp;
+
+            tail = tail->next;
+        }
+    }
+        void deque()
+        {
+
+            node *tmp;
+
+            if (head == NULL)
+
+                cout << "Linked list is empty: ";
+
+            else
+            {
+
+                tmp = head;
+
+                cout << "Deleted element: " << head->data << endl;
+
+                head = head->next;
+
+                free(tmp);
+            }
+        }
+
+        void display()
+        {
+
+            node *tmp;
+
+            tmp = head;
+
+            if (head == NULL)
+
+                cout << "Queue is empty";
+
+            else
+            {
+
+                while (tmp != NULL)
+                {
+
+                    cout << tmp->data << " ";
+
+                    tmp = tmp->next;
+                }
+            }
+        }
+    };
+
+    int main()
+    {
+        node d;
+
+        d.enque();
+        d.enque();
+        d.enque();
+        d.deque();
+        d.display();
+
+        return 0;
+    }
