@@ -1,0 +1,193 @@
+#include <iostream>
+using namespace std;
+
+class node
+{
+    int data;
+    node *next;
+
+public:
+    node *head, *tail;
+    node()
+    {
+        head = NULL;
+        tail = NULL;
+    }
+    //creation of a new node using function
+    void createnode(int n)
+    {
+        node *tmp = new node;
+        tmp->data = n;
+        tmp->next = NULL;
+        if (head == NULL) //if the node is the first one
+        {
+            head = tmp;
+            tail = tmp;
+        }
+        else //if the node is the next and as we already declare the first node as head hence we use this else loop
+        {
+            tail->next = tmp; //we will link the two nodesby using these statement
+            tail = tmp;       //we will declare the last node as tail
+        }
+    }
+    void display()
+    {
+        node *tmp;
+        tmp = head;
+        while (tmp != NULL)
+        {
+            cout << tmp->data << " ";
+            tmp = tmp->next;
+        }
+        cout << endl;
+    }
+    //function to insert a node at front of the linked list
+    void front(int n)
+    {
+        node *tmp = new node;
+        tmp->data = n;
+        tmp->next = head;
+        head = tmp;
+    }
+    //funtion to add element at end of linked list
+    void rear(int n)
+    {
+        node *tmp = new node;
+        tmp->data = n;
+        tmp->next = NULL;
+        tail = head; //rather declaring another node variabe we will use tail and pass address of head to tail and we will traverse
+        while (tail->next != NULL)
+        {
+            tail = tail->next; //increment linked list
+        }
+        tail->next = tmp; //passing address of last variable to last second variable
+    }
+    //function to add element at a particular location
+    void par(int n, int loc)
+    {
+        if (loc > n)
+        {
+            cout << "the location enter is out of the linked list" << endl;
+        }
+        else
+        {
+
+            node *tmp = new node;
+            tmp->data = n;
+            tmp->next = NULL;
+            node *cur; //declare node variable which will travere
+            cur = head;
+            for (int i = 0; i < loc; i++)
+            {
+                cur = cur->next;
+            }
+            //we will put address of next node which is assigned to prev node to the new node
+            tmp->next = cur->next;
+            cur->next = tmp;
+            //and we will give the new node address to prev node
+        }
+    }
+    void search()
+    {
+        node *tmp;
+        int key, flag = 0;
+        tmp = head;
+        cout << "Enter the key you want to search";
+        cin >> key;
+        while (tmp != NULL)
+        {
+            if (tmp->data == key)
+            {
+                flag = 1;
+                break;
+            }
+            tmp = tmp->next;
+        }
+        if (flag == 1)
+        {
+            cout << "match found- element is in the list";
+        }
+        else
+        {
+            cout << "match is not found";
+        }
+    }
+
+    void deletehead()
+    {
+        node *temp;
+        temp = head;
+        head = head->next;
+        delete temp;
+    }
+
+    void deletelast()
+    {
+        node *tmp, *tail;
+        tmp = head;
+        while (tmp->next != NULL)
+        {
+            tail = tmp;
+            tmp = tmp->next;
+        }
+        tail->next = NULL;
+        cout << "deleted number is : " << tmp->data << endl;
+        delete tmp;
+    }
+
+    void deleteafter()
+    {
+        int a;
+        cout << "Enter the position:";
+        cin >> a;
+
+        node *temp, *current;
+        current = head;
+        for (int i = 0; i < a; i++)
+        {
+            temp = current;
+            current = current->next;
+        }
+        temp->next = current->next;
+        cout << "Deleted number is : " << current->data << endl;
+        delete current;
+    }
+};
+
+int main()
+{
+    node a;
+    int n, b, c, d, e, loc;
+    cout << "enter the no of elements want to enter in the linked list" << endl;
+    cin >> n;
+
+    for (int i = 0; i < n; i++)
+    {
+        cout << "enter element" << endl;
+        cin >> b;
+        a.createnode(b);
+    }
+    a.display();
+    cout << "enter the element want to enter at the front of the linked list" << endl;
+    cin >> c;
+    a.front(c);
+    a.display();
+    cout << "enter the element want to enter at the end of the linked list" << endl;
+    cin >> d;
+    a.rear(d);
+    a.display();
+    cout << "enter the element want to enter at the particular location of the linked list" << endl;
+    cin >> e;
+    cout << "enter the location at which we want to add element" << endl;
+    cin >> loc;
+    a.par(e, loc);
+    a.display();
+    a.search();
+    a.deletehead();
+    a.display();
+    a.deletelast();
+    a.display();
+    a.deleteafter();
+    a.display();
+    return 0;
+}
